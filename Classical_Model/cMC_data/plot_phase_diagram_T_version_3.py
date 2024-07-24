@@ -1,4 +1,4 @@
-import numpy as np
+limport numpy as np
 import matplotlib.pyplot as plt
 from pathlib import Path
 import matplotlib
@@ -101,26 +101,15 @@ plt.ylim(-cut_plot,cut_plot)
 plt.xlim(-cut_plot,cut_plot_x)
 plt.xticks([-2,-1,0,1,2])
 plt.yticks([-2,-1,0,1,2])
-#plt.aspect('equal')
 plt.gca().set_aspect(1/np.sqrt(2))
 plt.xlabel(r"$J_\pm$",size=size_label_irreps)
 plt.ylabel(r"$J_{\pm\pm}$",size=size_label_irreps)
-#ins.set_title(r"$J_{zz}>0$",size=12)
 
 linewidth_points=100
 
-
-#plt.plot([1/6*Jzz],[-1/3*Jzz],"wo",linewidth=linewidth_points)
-#plt.plot([1/6*Jzz],[1/3*Jzz],"w*",linewidth=linewidth_points)
-#plt.plot([-1/2*Jzz],[0],"ro",linewidth=linewidth_points)
-
-#plt.plot([1/6*Jzz],[-1/3*Jzz],c="w",linewidth=linewidth_points,marker="o")
-
-#plt.plot([1/6*Jzz],[1/3*Jzz],c="w",linewidth=linewidth_points,marker="*")
 plt.scatter([1/6*Jzz],[-1/3*Jzz],c="w",s=linewidth_points,alpha=1,zorder=2)
 plt.scatter([1/6*Jzz],[1/3*Jzz],c="w",s=linewidth_points,alpha=1,zorder=2,marker="*")
 plt.scatter([-1/2*Jzz],[0],c="k",s=linewidth_points,alpha=1,zorder=2)
-#plt.plot([-1/2*Jzz],[0],c="k",linewidth=linewidth_points,marker="o")
 
 plt.tick_params(labelsize=size_label_irreps)
 plt.gca().set_aspect(1/np.sqrt(3))
@@ -157,14 +146,10 @@ num_average_simulations=0
 
 resp_sizes=1
 L_size_list=["12","10","8","6"][::-1]
-#while resp_sizes:
-#
-#    L_size_list.append(input("Enter_size="))
-#    resp_sizes=int(input("Enter more sizes yes (1) or no (0)"))
+
 markers_L=["s-","o-","^-","v-"]
 col=["b","k","g","r"]
 
-#fig, ax = plt.subplots(1)
 
 for i in range(len(L_size_list)):
     L_size=L_size_list[i]
@@ -172,15 +157,10 @@ for i in range(len(L_size_list)):
     my_file = Path(file_name)
 
     if (my_file.is_file()):
-#        print("File found")
-#        print(file_name)
-        
-        
+     
         FILE=np.loadtxt(file_name)
         T=FILE[:,0]
-
         C_v=FILE[:,2]
-       
         plt.semilogx(T,C_v,markers_L[i],color=col[i],alpha=0.5,fillstyle='none',label=r"$L=%i$" %(int(L_size)))
         
 plt.xlim(min(T),max(T))
@@ -199,19 +179,13 @@ plt.grid()
 plt.tick_params(labelsize=size_label_irreps)
 yvals=[5/8,3/4,7/8,1,9/8]
 ylabels=[r"$5/8$",r"$3/4$",r"$7/8$",r"$1$",r"9/8"]
-#ylabels=[r"$%.2f $" %y for y in yvals]
 plt.ylim(5/8,9/8)
-#yvals.append(7/8)
-#ylabels.append(r"$7/8 $")
-#plt.yticks(yvals/8,[r"$\frac{%i}{8} $" %y for y in yvals])
 plt.yticks(yvals,ylabels)
-#plt.gca().set_aspect(1/np.sqrt(2))
 
 
 '''
 ------------------------------------------  Values for the structure factor plots ------------------------------------------
 '''
-#Shrink=0.9
 Shrink_hhl=0.7
 Shrink_hk0=0.9
 size=15
@@ -225,7 +199,7 @@ pad_val=0.04
 def symmetrize_figure(matrix):
     return (matrix+matrix[:,::-1]+matrix[::-1,:]+matrix[::1,::-1]+matrix.T)/5
 
-sizex="10"#input("Enter size of x=")#input("Enter the size of the lattice=")
+sizex="10"
 sizey=sizex
 sizez=sizex
 
@@ -243,10 +217,10 @@ cmap2 = matplotlib.colors.LinearSegmentedColormap.from_list("", ["midnightblue",
 
 
 
-keyword=cmap2#"inferno"
-resp_contour=0#int(input("Contour plot (1) or Raw data (0): "))
+keyword=cmap2
+resp_contour=0
 
-resp_symm=0#int(input("Symmetrize data yes (1) or no (0):"))
+resp_symm=0
 levels=50
 ticks_labels=[-2,0,2]
 for i_temp in range(len(temp_index_array)):
@@ -266,7 +240,7 @@ for i_temp in range(len(temp_index_array)):
         Structure_factor_hhl=FILE[:,4]
         Structure_factor_hk0=FILE[:,5]
 
-        Q_size=int(sizex)*4##int(input("Enter size of Q_array="))
+        Q_size=int(sizex)*4
 
         Q1=np.reshape(q1,(Q_size,Q_size))
         Q2=np.reshape(q2,(Q_size,Q_size))
@@ -283,13 +257,9 @@ for i_temp in range(len(temp_index_array)):
         '''
         index_hhl=np.argmax(Structure_factor_hhl)
         index_hk0=np.argmax(Structure_factor_hk0)
-#        print(index_hhl,index_hk0)
-#        print(Structure_factor_hhl[index_hhl],Structure_factor_hk0[index_hk0])
-#
         Structure_factor_hk0[index_hk0]=(Structure_factor_hk0[index_hk0-1]+Structure_factor_hk0[index_hk0+1])/2
         Structure_factor_hhl[index_hhl]=(Structure_factor_hhl[index_hhl-1]+Structure_factor_hhl[index_hhl+1])/2
-        ### Setting the value to the new max which corresponds to another Gamma point
-#        print("Setting the value to the new max which corresponds to another Gamma point")
+
         Structure_factor_hk0[index_hk0]=np.max(Structure_factor_hk0)
         Structure_factor_hhl[index_hhl]=np.max(Structure_factor_hhl)
 
@@ -312,17 +282,11 @@ for i_temp in range(len(temp_index_array)):
             plt.gca().set_aspect(1/np.sqrt(2))
             cbar=plt.colorbar(im1,orientation="vertical",pad=0.05, shrink=Shrink_hhl)
             cbar.ax.tick_params(labelsize=size_label_irreps)
-#            cb = plt.colorbar(im1,ax=[ax],location='top',pad=pad_val, shrink=Shrink)
             plt.xlabel("$ [hh0] $",size=size_label_irreps)
             plt.ylabel("$ [00\ell] $",size=size_label_irreps)
             plt.xticks(ticks_labels)
             plt.yticks(ticks_labels)
             plt.tick_params(labelsize=size_label_irreps)
-            #            cb_ax = fig.add_axes([.65,.625,.01,.3])
-#            cbar=fig.colorbar(im1,orientation="vertical",pad=0.05, shrink=Shrink_hhl,cax=cb_ax)
-#            cbar.ax.tick_params(labelsize=size_label_irreps)
-
-
 
             ax = fig.add_subplot(spec[1,1])
             if(resp_contour):
@@ -333,19 +297,14 @@ for i_temp in range(len(temp_index_array)):
             plt.gca().set_aspect('equal')
             cbar=plt.colorbar(im1,orientation="vertical",pad=0.05, shrink=Shrink_hk0)
             cbar.ax.tick_params(labelsize=size_label_irreps)
-#            cb = plt.colorbar(im1,ax=[ax],location='top',pad=pad_val, shrink=Shrink)
             plt.xlabel("$ [h00] $",size=size_label_irreps)
             plt.ylabel("$ [0k0] $",size=size_label_irreps)
             plt.xticks(ticks_labels)
             plt.yticks(ticks_labels)
             plt.tick_params(labelsize=size_label_irreps)
 
-#            cb_ax = fig.add_axes([.65,.1,.01,.3])
-#            cbar=fig.colorbar(im1,orientation="vertical",pad=0.05, shrink=Shrink_hk0,cax=cb_ax)
-#            cbar.ax.tick_params(labelsize=size_label_irreps)
 
-
-keyword=cmap2#"inferno"
+keyword=cmap2
 for i_temp in range(len(temp_index_array)):
     file_name=file_name="Structure_factor_"+sizex+"_"+sizey+"_"+sizez+"_"+temp_index_array[i_temp]+"_theta"+Theta+".bin"
     my_file = Path(file_name)
@@ -363,7 +322,7 @@ for i_temp in range(len(temp_index_array)):
         Structure_factor_hhl=FILE[:,4]
         Structure_factor_hk0=FILE[:,5]
 
-        Q_size=int(sizex)*4##int(input("Enter size of Q_array="))
+        Q_size=int(sizex)*4
 
         Q1=np.reshape(q1,(Q_size,Q_size))
         Q2=np.reshape(q2,(Q_size,Q_size))
@@ -379,13 +338,8 @@ for i_temp in range(len(temp_index_array)):
         '''
         index_hhl=np.argmax(Structure_factor_hhl)
         index_hk0=np.argmax(Structure_factor_hk0)
-#        print(index_hhl,index_hk0)
-#        print(Structure_factor_hhl[index_hhl],Structure_factor_hk0[index_hk0])
-#
         Structure_factor_hk0[index_hk0]=(Structure_factor_hk0[index_hk0-1]+Structure_factor_hk0[index_hk0+1])/2
         Structure_factor_hhl[index_hhl]=(Structure_factor_hhl[index_hhl-1]+Structure_factor_hhl[index_hhl+1])/2
-        ### Setting the value to the new max which corresponds to another Gamma point
-#        print("Setting the value to the new max which corresponds to another Gamma point")
         Structure_factor_hk0[index_hk0]=np.max(Structure_factor_hk0)
         Structure_factor_hhl[index_hhl]=np.max(Structure_factor_hhl)
 
@@ -409,17 +363,11 @@ for i_temp in range(len(temp_index_array)):
             plt.gca().set_aspect(1/np.sqrt(2))
             cbar=plt.colorbar(im1,orientation="vertical",pad=0.05, shrink=Shrink_hhl)
             cbar.ax.tick_params(labelsize=size_label_irreps)
-#            cb = plt.colorbar(im1,ax=[ax],location='top',pad=pad_val, shrink=Shrink)
             plt.xlabel("$ [hh0] $",size=size_label_irreps)
             plt.ylabel("$ [00\ell] $",size=size_label_irreps)
             plt.xticks(ticks_labels)
             plt.yticks(ticks_labels)
             plt.tick_params(labelsize=size_label_irreps)
-            
-#            cb_ax = fig.add_axes([.9,.5,.01,.3])
-#            cbar=fig.colorbar(im1,orientation="vertical",pad=0.05, shrink=Shrink_hhl,cax=cb_ax)
-#            cbar.ax.tick_params(labelsize=size_label_irreps)
-            
             ax = fig.add_subplot(spec[1,2])
 
             if(resp_contour):
@@ -435,6 +383,6 @@ for i_temp in range(len(temp_index_array)):
             plt.yticks(ticks_labels)
             plt.tick_params(labelsize=size_label_irreps)
 
-plt.savefig("Fig_1_PNAS.pdf")
+#plt.savefig("Fig_1_PNAS.pdf")
 plt.show()
 
